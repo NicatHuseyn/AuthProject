@@ -46,7 +46,7 @@ public class Result
 
     public ErrorDto Error { get; private set; }
 
-    public static Result Success(int statusCode)
+    public static Result Success(int statusCode = (int)HttpStatusCode.OK)
     {
         return new Result {StatusCode = statusCode, IsSuccessful = true };
     }

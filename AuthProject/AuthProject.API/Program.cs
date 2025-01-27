@@ -1,3 +1,4 @@
+using AuthProject.Core.Configurations;
 using AuthProject.Shared.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.Configure<CustomTokenOptions>(builder.Configuration.GetSection("TokenOptions"));
+builder.Services.Configure<List<Client>>(builder.Configuration.GetSection("Clients"));
 
 var app = builder.Build();
 

@@ -3,7 +3,7 @@ using AuthProject.Shared;
 
 namespace AuthProject.Core.Services;
 
-public interface IAuhtenticationService
+public interface IAuthenticationService
 {
     Task<Result<TokenDto>> CreateTokenAsync(LoginDto loginDto);
 
@@ -12,5 +12,5 @@ public interface IAuhtenticationService
     // Refresh tokeni null edecek. istifadeye yararsiz edecek
     Task<Result> RevokeRefreshTokenAsync(string refreshToken);
 
-    Task<Result<ClientTokenDto>> CreateTokenByClient(ClientLoginDto clientLogin);
+    Result<ClientTokenDto> CreateTokenByClient(ClientLoginDto clientLogin);
 }

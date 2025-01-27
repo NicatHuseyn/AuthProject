@@ -9,7 +9,7 @@ namespace AuthProject.Data.Contexts;
 public class AppDbContext(DbContextOptions options) : IdentityDbContext<AppUser,IdentityRole, string>(options)
 {
     public DbSet<Product> Products { get; set; }
-    public RefreshToken RefreshTokens { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)
