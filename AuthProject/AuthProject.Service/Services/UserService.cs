@@ -1,7 +1,4 @@
-﻿using System.Net;
-using System.Runtime.Serialization;
-using System.Text;
-using AuthProject.Core.DTOs;
+﻿using AuthProject.Core.DTOs;
 using AuthProject.Core.Entities;
 using AuthProject.Core.Services;
 using AuthProject.Service.Mapping;

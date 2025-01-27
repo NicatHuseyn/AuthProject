@@ -13,7 +13,7 @@ public class ErrorDto
 
     public ErrorDto(string error, bool isShow)
     {
-        Errors.Add(error);
+        Errors!.Add(error);
         isShow = true;
     }
 
