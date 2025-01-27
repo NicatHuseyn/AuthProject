@@ -14,12 +14,12 @@ public class Result<T> where T : class
 
     public ErrorDto Error { get; private set; }
 
-    public static Result<T> Success(T data, int statusCode)
+    public static Result<T> Success(T data, int statusCode = (int)HttpStatusCode.OK)
     {
         return new Result<T> { Data = data, StatusCode = statusCode, IsSuccessful = true };
     }
 
-    public static Result<T> Success(int statusCode)
+    public static Result<T> Success(int statusCode = (int)HttpStatusCode.OK)
     {
         return new Result<T> { Data= default, StatusCode = statusCode, IsSuccessful = true };
     }

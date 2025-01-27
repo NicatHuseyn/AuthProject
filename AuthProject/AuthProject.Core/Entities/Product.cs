@@ -9,8 +9,5 @@ public class Product:BaseEntity
     public int Stock { get; set; }
 
     
-    public string UserId { get; set; }
-
-    [ForeignKey(nameof(UserId))]
-    public AppUser AppUser { get; set; }
+    public string AppUserId { get; set; }
 }

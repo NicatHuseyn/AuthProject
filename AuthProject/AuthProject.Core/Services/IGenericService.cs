@@ -6,15 +6,14 @@ namespace AuthProject.Core.Services;
 
 public interface IGenericService<TEntity, TDto> where TEntity : BaseEntity where TDto : class
 {
-    Task<Result<IEnumerable<TDto>>> GetAllAsync(bool tracking = true);
-    Task<Result<TDto>> GetByIdAsync(int id, bool tracking = true);
-    Result<IEnumerable<TDto>> GetWhere(Expression<Func<TEntity, bool>> expression, bool tracking = true);
+    Result<IEnumerable<TDto>> GetAll();
+    Task<Result<TDto>> GetByIdAsync(int id);
+    Task<Result<IEnumerable<TDto>>> GetWhereAsync(Expression<Func<TEntity, bool>> expression);
 
-    Task<Result<TDto>> AddAsync(TEntity entity);
+    Task<Result<TDto>> AddAsync(TDto entity);
 
-    Task<Result<IEnumerable<TDto>>> AddRangeAsync(IEnumerable<TEntity> entities);
 
-    Task<Result> RemoveAsync(TEntity entity);
+    Task<Result> RemoveAsync(int id);
 
-    Task<Result> UpdateAsync(TEntity entity);
+    Task<Result> UpdateAsync(TDto entity, int id);
 }
