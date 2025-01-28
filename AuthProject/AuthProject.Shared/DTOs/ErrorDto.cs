@@ -2,7 +2,7 @@
 
 public class ErrorDto
 {
-    public List<string> Errors { get; private set; }
+    public List<string> Errors { get; set; }
 
     public bool IsShow { get; private set; }
 
@@ -13,7 +13,7 @@ public class ErrorDto
 
     public ErrorDto(string error, bool isShow)
     {
-        Errors!.Add(error);
+        Errors = [error];
         isShow = true;
     }
 

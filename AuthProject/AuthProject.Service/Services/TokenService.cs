@@ -27,19 +27,21 @@ public class TokenService : ITokenService
 
     public TokenDto CreateToken(AppUser appUser)
     {
+        // UTC vaxtı ilə vaxt təyin edilməsi
         var accessTokenExpiration = DateTime.UtcNow.AddMinutes(_customTokenOptions.AccessTokenExpiration);
-        var refreshTokenExpiration = DateTime.UtcNow.AddMinutes(_customTokenOptions.AccessTokenExpiration);
+        var refreshTokenExpiration = DateTime.UtcNow.AddMinutes(_customTokenOptions.RefreshTokenExpiration);
 
         var securityKey = SignService.GetSymmetricSecurityKey(_customTokenOptions.SecurityKey);
 
-        SigningCredentials credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
+        SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+        // JWT yaradılması
         JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
-            issuer:_customTokenOptions.Issuer,
-            expires: accessTokenExpiration,
-            notBefore:DateTime.Now,
-            claims:GetClaims(appUser,_customTokenOptions.Audiences),
-            signingCredentials:credentials);
+            issuer: _customTokenOptions.Issuer,
+            expires: accessTokenExpiration, // UTC vaxtı
+            notBefore: DateTime.UtcNow, // UTC vaxtı
+            claims: GetClaims(appUser, _customTokenOptions.Audiences),
+            signingCredentials: credentials);
 
         var handler = new JwtSecurityTokenHandler();
 
@@ -54,8 +56,8 @@ public class TokenService : ITokenService
         };
 
         return tokenDto;
-
     }
+
 
     public ClientTokenDto CreateTokenByClient(Client client)
     {

@@ -42,7 +42,7 @@ public class AuthController : BaseController
     [HttpPost]
     public async Task<IActionResult> CreateRefreshToken(RefreshTokenDto refreshTokenDto)
     {
-        var result = await _authenticationService.RevokeRefreshTokenAsync(refreshTokenDto.Token);
+        var result = await _authenticationService.CreateRefreshTokenAsync(refreshTokenDto.Token);
 
         return ActionResultInstance(result);
     }
