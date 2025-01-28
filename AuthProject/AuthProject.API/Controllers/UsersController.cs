@@ -24,4 +24,8 @@ public class UsersController : BaseController
     [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetUser()=> ActionResultInstance(await _userService.GetUserAsync(HttpContext.User.Identity.Name));
+
+
+    [HttpPost("CreateUserRoles/{userName}")]
+    public async Task<IActionResult> CreateUserRoles(string userName)=> ActionResultInstance(await _userService.CreateUserRoles(userName));
 }

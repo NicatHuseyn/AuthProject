@@ -10,12 +10,18 @@ using AuthProject.Data.Repositories;
 using AuthProject.Data.UnitOfWork;
 using AuthProject.Service.Services;
 using AuthProject.Shared.Options;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using AuthProject.Shared.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 
@@ -90,7 +96,18 @@ builder.Services.AddAuthentication(options =>
 #endregion
 
 
+#region Fluent Validation Configurations
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+#endregion
 
+
+#region Extension Services
+builder.Services.CustomValidationResponse();
+#endregion
+
+// .NET Default messages closed
+builder.Services.Configure<ApiBehaviorOptions>(options=>options.SuppressModelStateInvalidFilter = true);
 
 var app = builder.Build();
 
@@ -100,6 +117,8 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
     app.MapOpenApi();
 }
+
+app.UseCustomException();
 
 app.UseHttpsRedirection();
 

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuthProject.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : BaseController

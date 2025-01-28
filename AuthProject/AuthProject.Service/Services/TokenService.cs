@@ -40,7 +40,7 @@ public class TokenService : ITokenService
             issuer: _customTokenOptions.Issuer,
             expires: accessTokenExpiration, // UTC vaxtı
             notBefore: DateTime.UtcNow, // UTC vaxtı
-            claims: GetClaims(appUser, _customTokenOptions.Audiences),
+            claims:  GetClaims(appUser, _customTokenOptions.Audiences).Result,
             signingCredentials: credentials);
 
         var handler = new JwtSecurityTokenHandler();
@@ -57,7 +57,6 @@ public class TokenService : ITokenService
 
         return tokenDto;
     }
-
 
     public ClientTokenDto CreateTokenByClient(Client client)
     {
@@ -97,9 +96,12 @@ public class TokenService : ITokenService
         return Convert.ToBase64String(numberByte);
     }
 
-    // This method for creating claims and get all claims (For Memebership)
-    private IEnumerable<Claim> GetClaims(AppUser appUser, List<string> audiences)
+    // This method for creating claims and get all claims (For Memebership), this method creat
+    private async Task<IEnumerable<Claim>> GetClaims(AppUser appUser, List<string> audiences)
     {
+
+        var userRoles = await _userManager.GetRolesAsync(appUser);
+
         var users = new List<Claim>()
         {
             new Claim(ClaimTypes.NameIdentifier,appUser.Id),
@@ -108,7 +110,9 @@ public class TokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
         };
 
+
         users.AddRange(audiences.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
+        users.AddRange(userRoles.Select(x=> new Claim(ClaimTypes.Role,x)));
 
         return users;
     }
